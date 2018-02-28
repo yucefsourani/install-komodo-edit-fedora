@@ -84,7 +84,7 @@ def downlaod_komodo(link):
             
         if  os.path.isfile(saveas):
             while True:
-                print ("{} Is Exists\n\nF To Force ReDownload || S To Skip Redownlaod || Q To Exit :".format(saveas))
+                print ("{} Is Exists\n\nF To Force ReDownload || S To Skip Redownload || Q To Exit :".format(saveas))
                 answer = input("- ")
                 if answer == "q" or answer == "Q":
                     exit("\nbye...\n")
