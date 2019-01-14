@@ -49,27 +49,33 @@ def install_package():
         return False
     else:
         return True
-
+ 
 def get_komodo_downlaod_link():
-    if os.uname().machine == "x86_64":
-        download_arch = "linuxx86_64"
-    else:
-        download_arch = "linuxx86"
-    
-    url = urllib.request.Request("https://www.activestate.com/komodo-ide/downloads/edit",headers={"User-Agent":"Mozilla/5.0"})
-    try:
-        htmldoc = urllib.request.urlopen(url,timeout=10)
-    except Exception as e:
-        print(e)
-        return False
-    soup = BeautifulSoup(htmldoc.read(),"html.parser")
-    for tag in soup.findAll("td",{"class":"dl_link"}):
-        try:
-            if tag.a.attrs["data-platform"] == download_arch:
-                return tag.a.attrs["href"].split("=",1)[-1]
-        except:
-            continue
-    return False
+	if os.uname().machine == "x86_64":
+		download_arch = "linuxx86_64"
+	else:
+		download_arch = "linuxx86"
+        
+	url = urllib.request.Request("https://www.activestate.com/komodo-ide/downloads/edit",headers={"User-Agent":"Mozilla/5.0"})
+	try:
+		htmldoc = urllib.request.urlopen(url,timeout=10)
+	except Exception as e:
+		print(e)
+		return False
+	soup = BeautifulSoup(htmldoc.read(),"html.parser")
+	for tag in soup.findAll("td",{"class":"dl_link"}):
+		try:
+			l = tag.a.attrs["href"]
+			if download_arch=="linuxx86_64":
+				if l.endswith("linux-x86_64.tar.gz"):
+					return l.split("=",1)[-1]
+			elif download_arch=="linuxx86":
+				if l.endswith("linux-x86.tar.gz"):
+					return l.split("=",1)[-1]
+		except Exception as e:
+			print(e)
+			continue
+	return False
 
 
 
